@@ -2,3 +2,7 @@
 @import "tailwindcss";
 
 /* ensuite ton CSS custom */
+
+.exe{
+    color: #fff83a;
+}

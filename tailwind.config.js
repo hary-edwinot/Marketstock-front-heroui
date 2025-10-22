@@ -26,29 +26,37 @@ export default {
         light: {
           colors: {
             primary: {
-              DEFAULT: "#F2E205", // Jaune
-              foreground: "#000000", // Texte NOIR
+              DEFAULT: "#000000", // Jaune
+              // foreground: "#000000", // Texte NOIR
             },
             background: "#FFFFFF", // Blanc pour le mode light
             foreground: "#000000", // Texte noir sur fond blanc
-            content1: "#FFFFFF", // Cards blanches
+            content1: "#ffffff", // Cards blanches
             content2: "#F4F4F5", // Cards légèrement grises
             content3: "#E4E4E7", // Plus foncé
             content4: "#D4D4D8", // Encore plus foncé
+            badge1: {
+              DEFAULT: "#05ff7e25",
+              foreground: "#085e31"
+            }
           },
         },
         dark: {
           colors: {
             primary: {
-              DEFAULT: "#F2E205", // Même jaune en mode dark
+              DEFAULT: "#E8FAF0", // Même jaune en mode dark
               foreground: "#000000", // Texte NOIR aussi en mode dark
             },
-            background: "#14140F", // Votre couleur sombre pour le mode dark
+            background: "#0c0c09", // Votre couleur sombre pour le mode dark
             foreground: "#FFFFFF", // Texte blanc sur fond sombre
             content1: "#1E1E1E", // Cards sombres
-            content2: "#2A2A2A", // Légèrement plus claires
+            content2: "#0d0d0a", // Légèrement plus claires
             content3: "#3A3A3A", // Plus claires
             content4: "#4A4A4A", // Encore plus claires
+            badge1: {
+              DEFAULT: "#077025",
+              foreground: "#05822825"
+            }
           }
         }
       },
