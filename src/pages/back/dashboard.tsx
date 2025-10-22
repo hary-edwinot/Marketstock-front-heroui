@@ -14,21 +14,7 @@ export default function DashboardPage() {
 
   return (
     <AdminLayout>
-      <section className="">
-        <div className="flex justify-between items-center h-[60px] mb-4 p-4 dark:bg-content2 bg-content1 rounded-2xl border border-content3">
-          <Title current={currentRoute} />
-          <div className="flex gap-3">
-            <Button
-              color="primary"
-              variant="solid"
-              startContent={<Newspaper />}
-            >
-              Publier
-            </Button>
-          </div>
-        </div>
-        <DashboardFeature />
-      </section>
+      <DashboardFeature />
     </AdminLayout>
   );
 }

@@ -3,7 +3,7 @@ import RevenueFeature from "../components/dashboardFeatures/revenue";
 import { TrendingDown, TrendingUp, Package } from 'lucide-react';
 import ChartDashboard from "../components/dashboardFeatures/chart";
 import CardSideValue from "../components/dashboardFeatures/card";
-import TableDashboard from "../components/dashboardFeatures/table";
+import TableList from "../components/common/Table";
 
 const DashboardFeature = () => {
 
@@ -84,9 +84,9 @@ const DashboardFeature = () => {
         </div>
       </div>
 
-      <div className="mt-4 p-4 dark:bg-content2 bg-content1 rounded-2xl border border-content3">
-        <TableDashboard />
-      </div>
+      
+        <TableList />
+      
     </Fragment>
   );
 };

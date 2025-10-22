@@ -1,5 +1,8 @@
 import WelcomePage from "@/pages/front/home";
 import DashboardPage from "@/pages/back/dashboard";
+import Produit from "@/pages/back/produit";
+
+
 import {
   Home,
   LayoutDashboard,
@@ -31,7 +34,7 @@ export const routes = [
   },
   {
     path: "/produits",
-    element: DashboardPage, // Remplacez par votre vraie page
+    element: Produit,
     name: "Produits",
     icon: LayoutList
   },
