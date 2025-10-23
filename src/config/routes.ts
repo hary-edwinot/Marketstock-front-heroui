@@ -1,6 +1,7 @@
 import WelcomePage from "@/pages/front/home";
 import DashboardPage from "@/pages/back/dashboard";
-import Produit from "@/pages/back/produit";
+import ProduitPage from "@/pages/back/produit";
+import LivraisonPage from "@/pages/back/livraison";
 
 
 import {
@@ -34,7 +35,7 @@ export const routes = [
   },
   {
     path: "/produits",
-    element: Produit,
+    element: ProduitPage,
     name: "Produits",
     icon: LayoutList
   },
@@ -76,7 +77,7 @@ export const routes = [
   },
   {
     path: "/livraisons",
-    element: DashboardPage, // Remplacez par votre vraie page
+    element: LivraisonPage, // Remplacez par votre vraie page
     name: "Livraisons",
     icon: Truck
   },

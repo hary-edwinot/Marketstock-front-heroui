@@ -1,9 +1,10 @@
-import { Fragment } from "react"
+import { Fragment, useEffect, useState } from "react"
 import RevenueFeature from "../components/dashboardFeatures/revenue";
 import { TrendingDown, TrendingUp, Package } from 'lucide-react';
 import ChartDashboard from "../components/dashboardFeatures/chart";
 import CardSideValue from "../components/dashboardFeatures/card";
 import TableList from "../components/common/Table";
+
 
 const DashboardFeature = () => {
 
@@ -84,9 +85,9 @@ const DashboardFeature = () => {
         </div>
       </div>
 
-      
-        <TableList />
-      
+
+      <TableList />
+
     </Fragment>
   );
 };
