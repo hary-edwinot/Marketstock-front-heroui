@@ -1,4 +1,6 @@
-import React from "react";
+// ===== IMPORTS =====
+// Importation de React et des composants HeroUI nécessaires pour le tableau
+import React, { useContext } from "react";
 import {
     Table,
     TableHeader,
@@ -16,236 +18,27 @@ import {
     User,
     Pagination,
 } from "@heroui/react";
+// Icône pour l'affichage des commandes
+import { FileText } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 
-export const columns = [
-    { name: "ID", uid: "id", sortable: true },
-    { name: "PRODUIT", uid: "name", sortable: true },
-    { name: "PRIX", uid: "price", sortable: true },
-    { name: "CATÉGORIE", uid: "category", sortable: true },
-    { name: "STOCK", uid: "stock" },
-    { name: "FOURNISSEUR", uid: "supplier" },
-    { name: "STATUS", uid: "status", sortable: true },
-    { name: "ACTIONS", uid: "actions" },
-];
 
-export const statusOptions = [
-    { name: "En stock", uid: "en_stock" },
-    { name: "Stock épuisé", uid: "stock_epuise" },
-    { name: "Livraison en cours", uid: "livraison_en_cours" },
-    { name: "Livrée", uid: "livree" },
-    { name: "En attente de livraison", uid: "en_attente_livraison" },
-    { name: "En commande", uid: "en_commande" },
-    { name: "Livraison annulée", uid: "livraison_annulee" },
-    { name: "Commande annulée", uid: "commande_annulee" },
-];
 
-export const products = [
-    {
-        id: 1,
-        name: "iPhone 15 Pro",
-        price: "1229.00",
-        category: "Smartphones",
-        status: "en_stock",
-        stock: "45",
-        avatar: "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=150",
-        supplier: "Apple Inc.",
-    },
-    {
-        id: 2,
-        name: "MacBook Air M2",
-        price: "1199.00",
-        category: "Ordinateurs",
-        status: "livraison_en_cours",
-        stock: "12",
-        avatar: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=150",
-        supplier: "Apple Inc.",
-    },
-    {
-        id: 3,
-        name: "Samsung Galaxy S24",
-        price: "899.00",
-        category: "Smartphones",
-        status: "en_stock",
-        stock: "28",
-        avatar: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=150",
-        supplier: "Samsung Electronics",
-    },
-    {
-        id: 4,
-        name: "Sony WH-1000XM5",
-        price: "399.00",
-        category: "Audio",
-        status: "stock_epuise",
-        stock: "0",
-        avatar: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=150",
-        supplier: "Sony Corporation",
-    },
-    {
-        id: 5,
-        name: "Dell XPS 13",
-        price: "1099.00",
-        category: "Ordinateurs",
-        status: "en_attente_livraison",
-        stock: "8",
-        avatar: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=150",
-        supplier: "Dell Technologies",
-    },
-    {
-        id: 6,
-        name: "Nintendo Switch OLED",
-        price: "349.00",
-        category: "Gaming",
-        stock: "22",
-        avatar: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=150",
-        supplier: "Nintendo Co.",
-        status: "en_stock",
-    },
-    {
-        id: 7,
-        name: "AirPods Pro 2",
-        price: "279.00",
-        category: "Audio",
-        status: "livree",
-        stock: "35",
-        avatar: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=150",
-        supplier: "Apple Inc.",
-    },
-    {
-        id: 8,
-        name: "iPad Pro 12.9\"",
-        price: "1199.00",
-        category: "Tablettes",
-        status: "en_commande",
-        stock: "15",
-        avatar: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=150",
-        supplier: "Apple Inc.",
-    },
-    {
-        id: 9,
-        name: "LG OLED 55\"",
-        price: "1499.00",
-        category: "TV & Écrans",
-        status: "livraison_annulee",
-        stock: "3",
-        avatar: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=150",
-        supplier: "LG Electronics",
-    },
-    {
-        id: 10,
-        name: "Canon EOS R5",
-        price: "3899.00",
-        category: "Photo",
-        status: "en_stock",
-        stock: "7",
-        avatar: "https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=150",
-        supplier: "Canon Inc.",
-    },
-    {
-        id: 11,
-        name: "Microsoft Surface Pro 9",
-        price: "1099.00",
-        category: "Tablettes",
-        status: "en_stock",
-        stock: "18",
-        avatar: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=150",
-        supplier: "Microsoft Corporation",
-    },
-    {
-        id: 12,
-        name: "Bose QuietComfort 45",
-        price: "329.00",
-        category: "Audio",
-        status: "commande_annulee",
-        stock: "0",
-        avatar: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=150",
-        supplier: "Bose Corporation",
-    },
-    {
-        id: 13,
-        name: "Google Pixel 8 Pro",
-        price: "999.00",
-        category: "Smartphones",
-        status: "en_stock",
-        stock: "24",
-        avatar: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=150",
-        supplier: "Google LLC",
-    },
-    {
-        id: 14,
-        name: "Tesla Model Y Accessoires",
-        price: "299.00",
-        category: "Automobile",
-        status: "en_attente_livraison",
-        stock: "12",
-        avatar: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=150",
-        supplier: "Tesla Inc.",
-    },
-    {
-        id: 15,
-        name: "Dyson V15 Detect",
-        price: "749.00",
-        category: "Électroménager",
-        status: "livraison_en_cours",
-        stock: "9",
-        avatar: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=150",
-        supplier: "Dyson Ltd.",
-    },
-    {
-        id: 16,
-        name: "Apple Watch Series 9",
-        price: "429.00",
-        category: "Montres connectées",
-        status: "en_stock",
-        stock: "31",
-        avatar: "https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=150",
-        supplier: "Apple Inc.",
-    },
-    {
-        id: 17,
-        name: "HP Envy x360",
-        price: "899.00",
-        category: "Ordinateurs",
-        status: "stock_epuise",
-        stock: "0",
-        avatar: "https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=150",
-        supplier: "HP Inc.",
-    },
-    {
-        id: 18,
-        name: "Logitech MX Master 3S",
-        price: "99.00",
-        category: "Accessoires",
-        status: "livree",
-        stock: "67",
-        avatar: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=150",
-        supplier: "Logitech International",
-    },
-    {
-        id: 19,
-        name: "Samsung 32\" Odyssey G7",
-        price: "649.00",
-        category: "Gaming",
-        status: "en_commande",
-        stock: "14",
-        avatar: "https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=150",
-        supplier: "Samsung Electronics",
-    },
-    {
-        id: 20,
-        name: "Kindle Paperwhite",
-        price: "139.00",
-        category: "Livres électroniques",
-        status: "en_stock",
-        stock: "42",
-        avatar: "https://images.unsplash.com/photo-1481887328591-3e277f9473dc?w=150",
-        supplier: "Amazon.com Inc.",
-    },
-];
+// ===== FONCTIONS UTILITAIRES =====
 
+/**
+ * Fonction pour capitaliser la première lettre d'une chaîne
+ * @param {string} s - La chaîne à capitaliser
+ * @returns {string} - La chaîne capitalisée
+ */
 export function capitalize(s) {
     return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : "";
 }
 
+/**
+ * Icône "Plus" pour le bouton d'ajout
+ * Composant SVG réutilisable avec des props personnalisables
+ */
 export const PlusIcon = ({ size = 24, width, height, ...props }) => {
     return (
         <svg
@@ -272,6 +65,10 @@ export const PlusIcon = ({ size = 24, width, height, ...props }) => {
     );
 };
 
+/**
+ * Icône "Trois points verticaux" pour le menu d'actions
+ * Utilisée dans le dropdown des actions de chaque ligne
+ */
 export const VerticalDotsIcon = ({ size = 24, width, height, ...props }) => {
     return (
         <svg
@@ -292,6 +89,10 @@ export const VerticalDotsIcon = ({ size = 24, width, height, ...props }) => {
     );
 };
 
+/**
+ * Icône de loupe pour le champ de recherche
+ * Affichée dans l'input de recherche comme indicateur visuel
+ */
 export const SearchIcon = (props) => {
     return (
         <svg
@@ -322,6 +123,10 @@ export const SearchIcon = (props) => {
     );
 };
 
+/**
+ * Icône chevron vers le bas pour les menus déroulants
+ * Utilisée dans les boutons de filtres et de sélection de colonnes
+ */
 export const ChevronDownIcon = ({ strokeWidth = 1.5, ...otherProps }) => {
     return (
         <svg
@@ -346,7 +151,19 @@ export const ChevronDownIcon = ({ strokeWidth = 1.5, ...otherProps }) => {
     );
 };
 
+// ===== CONFIGURATION DES COULEURS =====
+
+/**
+ * Mapping des statuts vers les couleurs des puces (Chips)
+ * Chaque statut est associé à une couleur spécifique pour l'affichage visuel
+ * - success: vert (statuts positifs)
+ * - danger: rouge (statuts d'erreur/annulation)
+ * - warning: orange (statuts d'attente)
+ * - primary: bleu (statuts en cours)
+ * - secondary: gris (statuts neutres)
+ */
 const statusColorMap = {
+    // Statuts produits
     en_stock: "success",
     stock_epuise: "danger",
     livraison_en_cours: "primary",
@@ -355,51 +172,116 @@ const statusColorMap = {
     en_commande: "secondary",
     livraison_annulee: "danger",
     commande_annulee: "danger",
+
+    // Statuts commandes
+    en_attente: "warning",
+    confirmee: "primary",
+    "confirmée": "primary",  // Ajout du statut avec accent
+    en_preparation: "secondary",
+    expediee: "primary",
+    annulee: "danger",
 };
 
+// ===== COMPOSANT PRINCIPAL TABLELIST =====
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "price", "category", "status", "actions"];
+/**
+ * Composant de tableau réutilisable et configurable
+ * 
+ * @param {Array} INITIAL_VISIBLE_COLUMNS - Colonnes visibles par défaut
+ * @param {Array} data - Les données à afficher dans le tableau
+ * @param {Array} columns - Configuration des colonnes (nom, uid, sortable, etc.)
+ * @param {Array} statusOptions - Options de statut pour les filtres
+ * @param {string} searchPlaceholder - Texte du placeholder pour la recherche
+ * @param {string} itemLabel - Label pour le nombre total d'éléments ("produits", "commandes", etc.)
+ * 
+ * Fonctionnalités incluses :
+ * - Recherche et filtrage des données
+ * - Tri des colonnes
+ * - Pagination
+ * - Sélection multiple
+ * - Affichage conditionnel des colonnes
+ * - Actions par ligne (voir, modifier, supprimer)
+ */
+export default function TableList({ INITIAL_VISIBLE_COLUMNS, data = [], columns = [], statusOptions = [], searchPlaceholder = "Rechercher...", itemLabel = "éléments", addButtonNewLabel = "Ajouter", openDrawer, isSelected = true }) {
 
 
-export default function TableList() {
+    // ===== ÉTATS LOCAUX =====
+    const navigate = useNavigate();
+    // Valeur du champ de recherche
     const [filterValue, setFilterValue] = React.useState("");
+
+    // Clés des éléments sélectionnés (pour la sélection multiple)
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
+
+    // Colonnes actuellement visibles dans le tableau
     const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
+
+    // Filtre de statut actuel ("all" ou array de statuts sélectionnés)
     const [statusFilter, setStatusFilter] = React.useState("all");
+
+    // Nombre de lignes affichées par page
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+    // Configuration du tri (colonne et direction)
     const [sortDescriptor, setSortDescriptor] = React.useState({
         column: "name",
         direction: "ascending",
     });
+
+    // Page actuelle de la pagination
     const [page, setPage] = React.useState(1);
 
+    // ===== VALEURS DÉRIVÉES =====
+
+    // Indique s'il y a un filtre de recherche actif
     const hasSearchFilter = Boolean(filterValue);
 
+    /**
+     * Calcule les colonnes à afficher dans l'en-tête du tableau
+     * Filtre les colonnes selon la sélection de l'utilisateur
+     */
     const headerColumns = React.useMemo(() => {
+        // Si toutes les colonnes sont sélectionnées, retourner toutes les colonnes
         if (visibleColumns === "all") return columns;
 
+        // Sinon, filtrer les colonnes selon la sélection
         return columns.filter((column) => Array.from(visibleColumns).includes(column.uid));
-    }, [visibleColumns]);
+    }, [visibleColumns, columns]);
 
+    /**
+     * Applique les filtres de recherche et de statut aux données
+     * Cette fonction est mémorisée pour éviter les recalculs inutiles
+     */
     const filteredItems = React.useMemo(() => {
-        let filteredProducts = [...products];
+        // Commencer avec une copie des données originales
+        let filteredData = [...data];
 
+        // Appliquer le filtre de recherche si présent
         if (hasSearchFilter) {
-            filteredProducts = filteredProducts.filter((product) =>
-                product.name.toLowerCase().includes(filterValue.toLowerCase()),
-            );
+            filteredData = filteredData.filter((item) => {
+                // Rechercher dans le champ 'name' (produits) ou 'order_number' (commandes)
+                const searchField = item.name || item.order_number || '';
+                return searchField.toLowerCase().includes(filterValue.toLowerCase());
+            });
         }
+
+        // Appliquer le filtre de statut si ce n'est pas "all" et pas tous les statuts sélectionnés
         if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-            filteredProducts = filteredProducts.filter((product) =>
-                Array.from(statusFilter).includes(product.status),
+            filteredData = filteredData.filter((item) =>
+                Array.from(statusFilter).includes(item.status),
             );
         }
 
-        return filteredProducts;
-    }, [products, filterValue, statusFilter]);
+        return filteredData;
+    }, [data, filterValue, statusFilter, hasSearchFilter, statusOptions.length]);
 
+    // Calculer le nombre total de pages nécessaires
     const pages = Math.ceil(filteredItems.length / rowsPerPage) || 1;
 
+    /**
+     * Calcule les éléments à afficher sur la page actuelle
+     * Applique la pagination aux données filtrées
+     */
     const items = React.useMemo(() => {
         const start = (page - 1) * rowsPerPage;
         const end = start + rowsPerPage;
@@ -407,50 +289,106 @@ export default function TableList() {
         return filteredItems.slice(start, end);
     }, [page, filteredItems, rowsPerPage]);
 
+    /**
+     * Applique le tri aux éléments de la page actuelle
+     * Tri basé sur la configuration dans sortDescriptor
+     */
     const sortedItems = React.useMemo(() => {
         return [...items].sort((a, b) => {
+            // Récupérer les valeurs à comparer
             const first = a[sortDescriptor.column];
             const second = b[sortDescriptor.column];
+
+            // Effectuer la comparaison (-1, 0, 1)
             const cmp = first < second ? -1 : first > second ? 1 : 0;
 
+            // Inverser le résultat si le tri est descendant
             return sortDescriptor.direction === "descending" ? -cmp : cmp;
         });
     }, [sortDescriptor, items]);
 
-    const renderCell = React.useCallback((product, columnKey) => {
-        const cellValue = product[columnKey];
+    // ===== FONCTION DE RENDU DES CELLULES =====
 
+    /**
+     * Fonction qui détermine comment afficher chaque cellule selon son type
+     * Cette fonction gère différents types de colonnes : nom, prix, statut, actions, etc.
+     * 
+     * @param {Object} item - L'objet de données de la ligne
+     * @param {string} columnKey - L'identifiant unique de la colonne
+     * @returns {JSX.Element} - Le contenu formaté de la cellule
+     */
+    const renderCell = React.useCallback((item, columnKey) => {
+
+        // Récupérer la valeur brute de la cellule
+        const cellValue = item[columnKey];
+
+        // Switch sur le type de colonne pour un affichage personnalisé
         switch (columnKey) {
-            case "name":
+
+            // Colonne numéro de commande - Affichage avec icône et nom du produit
+            case "commande_number":
                 return (
-                    <User
-                        avatarProps={{ radius: "lg", src: product.avatar }}
-                        description={product.supplier}
-                        name={cellValue}
+                    <div className="flex align-center ">
+                        <FileText className="mr-2" />
+                        <div>
+                            <p className="text-bold text-small">{cellValue}</p>
+                        </div>
+                    </div>
+                );
+
+            // Colonne client
+            case "client_id":
+                return (
+                    <div className="flex flex-col">
+                        <p className="text-bold text-small">{item.client?.client_name || cellValue}</p>
+                        <p className="text-bold text-tiny text-default-400">{item.client?.client_email}</p>
+                    </div>
+                );
+
+            // Colonne facture
+            case "facture_id":
+                return (
+                    <div className="flex flex-col">
+                        <p className="text-bold text-small"><span className={`rounded-[5px] py-1 px-3`}>{item.facture?.facture_number || ''}</span></p>
+                    </div>
+                );
+
+            // Colonne reste à payer
+            case "commande_rest_to_pay":
+                return (
+                    <div className="flex flex-col">
+                        <p className="text-bold text-small text-danger">{(cellValue) ? cellValue : '0'} MGA</p>
+                        <p className="text-bold text-tiny text-default-400">Reste à payer</p>
+                    </div>
+                );
+
+            // Colonne statut - Affichage avec puce colorée
+            case "status_id":
+                return (
+                    <Chip
+                        className={`capitalize bg-${statusColorMap[item.status?.status_name]}-100`}
+                        color={statusColorMap[item.status?.status_name] || "default"}
+                        size="sm"
+                        variant="flat"
                     >
-                        {product.supplier}
-                    </User>
-                );
-            case "price":
-                return (
-                    <div className="flex flex-col">
-                        <p className="text-bold text-small">{cellValue} €</p>
-                        <p className="text-bold text-tiny text-default-400">Stock: {product.stock}</p>
-                    </div>
-                );
-            case "category":
-                return (
-                    <div className="flex flex-col">
-                        <p className="text-bold text-small capitalize">{cellValue}</p>
-                        <p className="text-bold text-tiny capitalize text-default-400">{product.supplier}</p>
-                    </div>
-                );
-            case "status":
-                return (
-                    <Chip className="capitalize" color={statusColorMap[product.status]} size="sm" variant="flat">
-                        {statusOptions.find(s => s.uid === product.status)?.name || cellValue}
+                        {item.status?.status_name || cellValue}
                     </Chip>
                 );
+
+            // // Colonne date de création - Formatage français de la date et heure
+            case "created_at":
+                return (
+                    <div className="flex flex-col">
+                        <p className="text-bold text-small">
+                            {item.created_at ? new Date(item.created_at).toLocaleDateString('fr-FR') : 'N/A'}
+                        </p>
+                        <p className="text-bold text-tiny text-default-400">
+                            {item.created_at ? new Date(item.created_at).toLocaleTimeString('fr-FR') : ''}
+                        </p>
+                    </div>
+                );
+
+            // Colonne actions - Menu déroulant avec options
             case "actions":
                 return (
                     <div className="relative flex justify-end items-center gap-2">
@@ -468,28 +406,46 @@ export default function TableList() {
                         </Dropdown>
                     </div>
                 );
+
+            // Cas par défaut - Affichage simple de la valeur
             default:
                 return cellValue;
         }
-    }, []);
+    }, [statusOptions]);
 
+    // ===== GESTIONNAIRES D'ÉVÉNEMENTS =====
+
+    /**
+     * Passer à la page suivante
+     */
     const onNextPage = React.useCallback(() => {
         if (page < pages) {
             setPage(page + 1);
         }
     }, [page, pages]);
 
+    /**
+     * Passer à la page précédente
+     */
     const onPreviousPage = React.useCallback(() => {
         if (page > 1) {
             setPage(page - 1);
         }
     }, [page]);
 
+    /**
+     * Changer le nombre de lignes par page
+     * Remet automatiquement à la page 1
+     */
     const onRowsPerPageChange = React.useCallback((e) => {
         setRowsPerPage(Number(e.target.value));
         setPage(1);
     }, []);
 
+    /**
+     * Gérer le changement de valeur du champ de recherche
+     * Remet automatiquement à la page 1 lors d'une nouvelle recherche
+     */
     const onSearchChange = React.useCallback((value) => {
         if (value) {
             setFilterValue(value);
@@ -499,25 +455,45 @@ export default function TableList() {
         }
     }, []);
 
+    /**
+     * Effacer le champ de recherche
+     * Remet à la page 1
+     */
     const onClear = React.useCallback(() => {
         setFilterValue("");
         setPage(1);
     }, []);
 
+    // Gestionnaire d'événements pour le bouton d'ajout
+    const onAddNew = React.useCallback(() => {
+        // Logique pour ajouter un nouvel élément
+    }, []);
+
+    // ===== CONTENU DU HAUT DU TABLEAU =====
+
+    /**
+     * Contenu affiché au-dessus du tableau
+     * Inclut : barre de recherche, filtres de statut, sélecteur de colonnes, bouton d'ajout
+     */
     const topContent = React.useMemo(() => {
         return (
             <div className="flex flex-col gap-4">
+                {/* Première ligne : barre de recherche et boutons de contrôle */}
                 <div className="flex justify-between gap-3 items-end">
+                    {/* Champ de recherche avec icône */}
                     <Input
                         isClearable
                         className="w-full sm:max-w-[44%]"
-                        placeholder="Rechercher un produit..."
+                        placeholder={searchPlaceholder}
                         startContent={<SearchIcon />}
                         value={filterValue}
                         onClear={() => onClear()}
                         onValueChange={onSearchChange}
                     />
+
+                    {/* Groupe de boutons de contrôle */}
                     <div className="flex gap-3">
+                        {/* Dropdown de filtrage par statut */}
                         <Dropdown>
                             <DropdownTrigger className="hidden sm:flex">
                                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
@@ -539,10 +515,12 @@ export default function TableList() {
                                 ))}
                             </DropdownMenu>
                         </Dropdown>
+
+                        {/* Dropdown de sélection des colonnes visibles */}
                         <Dropdown>
                             <DropdownTrigger className="hidden sm:flex">
                                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
-                                    Columns
+                                    Colonnes
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu
@@ -560,13 +538,24 @@ export default function TableList() {
                                 ))}
                             </DropdownMenu>
                         </Dropdown>
-                        <Button color="primary" endContent={<PlusIcon />}>
-                            Ajouter Produit
+
+                        {/* Bouton d'ajout d'un nouvel élément */}
+                        <Button
+                            color="primary"
+                            endContent={<PlusIcon />}
+                            onPress={openDrawer || (() => console.log("Aucune action configurée pour le bouton d'ajout"))}
+                        >
+                            {addButtonNewLabel}
                         </Button>
                     </div>
                 </div>
+
+                {/* Deuxième ligne : informations et sélecteur de pagination */}
                 <div className="flex justify-between items-center">
-                    <span className="text-default-400 text-small">Total {products.length} produits</span>
+                    {/* Affichage du nombre total d'éléments */}
+                    <span className="text-default-400 text-small">Total {data.length} {itemLabel}</span>
+
+                    {/* Sélecteur du nombre de lignes par page */}
                     <label className="flex items-center text-default-400 text-small">
                         Lignes par page:
                         <select
@@ -586,19 +575,34 @@ export default function TableList() {
         statusFilter,
         visibleColumns,
         onRowsPerPageChange,
-        products.length,
+        data.length,
         onSearchChange,
         hasSearchFilter,
+        searchPlaceholder,
+        itemLabel,
+        statusOptions,
+        columns,
+        openDrawer,
+        addButtonNewLabel,
     ]);
 
+    // ===== CONTENU DU BAS DU TABLEAU =====
+
+    /**
+     * Contenu affiché en bas du tableau
+     * Inclut : informations de sélection, pagination, boutons de navigation
+     */
     const bottomContent = React.useMemo(() => {
         return (
             <div className="py-2 px-2 flex justify-between items-center">
+                {/* Informations sur la sélection d'éléments */}
                 <span className="w-[30%] text-small text-default-400">
                     {selectedKeys === "all"
                         ? "Tous les éléments sélectionnés"
                         : `${selectedKeys.size} sur ${filteredItems.length} sélectionnés`}
                 </span>
+
+                {/* Composant de pagination centrale */}
                 <Pagination
                     isCompact
                     showControls
@@ -608,6 +612,8 @@ export default function TableList() {
                     total={pages}
                     onChange={setPage}
                 />
+
+                {/* Boutons de navigation page précédente/suivante */}
                 <div className="hidden sm:flex w-[30%] justify-end gap-2">
                     <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
                         Précédent
@@ -618,8 +624,14 @@ export default function TableList() {
                 </div>
             </div>
         );
-    }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
+    }, [selectedKeys, filteredItems.length, page, pages, onPreviousPage, onNextPage]);
 
+    // ===== RENDU PRINCIPAL =====
+
+    /**
+     * Rendu du composant tableau complet
+     * Structure : conteneur → tableau HeroUI → en-tête → corps → pied de page
+     */
     return (
         <div className="mt-4 p-4 dark:bg-content2 bg-content1 rounded-2xl border border-content3">
             <Table
@@ -630,14 +642,15 @@ export default function TableList() {
                 classNames={{
                     wrapper: "max-h-[382px]",
                 }}
-                selectedKeys={selectedKeys}
-                selectionMode="multiple"
+                selectedKeys={isSelected ? selectedKeys : null}
+                selectionMode={isSelected ? "multiple" : "none"}
                 sortDescriptor={sortDescriptor}
                 topContent={topContent}
                 topContentPlacement="outside"
                 onSelectionChange={setSelectedKeys}
                 onSortChange={setSortDescriptor}
             >
+                {/* En-tête du tableau avec les colonnes */}
                 <TableHeader columns={headerColumns}>
                     {(column) => (
                         <TableColumn
@@ -649,15 +662,30 @@ export default function TableList() {
                         </TableColumn>
                     )}
                 </TableHeader>
+                {/* Corps du tableau avec les données */}
                 <TableBody emptyContent={"Aucun produit trouvé"} items={sortedItems}>
-                    {(item) => (
-                        <TableRow key={item.id}>
-                            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-                        </TableRow>
-                    )}
+                    {(item) => {
+
+                        const isFacture = !!item?.facture;
+                        const handleRowClick = () => {
+                            if (isFacture) {
+                                navigate(`${item.commande_number}/facture/${item.facture?.facture_id || ''}`);
+                            }
+                        };
+                        return (
+                            <TableRow
+                                key={item.id || item.order_id || item.commande_id}
+                                onClick={isFacture ? handleRowClick : null}
+                                style={isFacture ? { cursor: 'pointer' } : {}}
+                            >
+                                {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+                            </TableRow>
+                        );
+                    }}
                 </TableBody>
             </Table>
         </div>
     );
-}
+};
+
 

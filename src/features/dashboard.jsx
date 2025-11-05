@@ -4,6 +4,7 @@ import { TrendingDown, TrendingUp, Package } from 'lucide-react';
 import ChartDashboard from "../components/dashboardFeatures/chart";
 import CardSideValue from "../components/dashboardFeatures/card";
 import TableList from "../components/common/Table";
+import { columnsProduct, statusOptionsProduct, products, INITIAL_VISIBLE_COLUMNS } from "../config/tableColumn";
 
 
 const DashboardFeature = () => {
@@ -86,7 +87,12 @@ const DashboardFeature = () => {
       </div>
 
 
-      <TableList />
+      <TableList
+              data={products}
+              columns={columnsProduct}
+              statusOptions={statusOptionsProduct}
+              INITIAL_VISIBLE_COLUMNS={INITIAL_VISIBLE_COLUMNS}
+            />
 
     </Fragment>
   );

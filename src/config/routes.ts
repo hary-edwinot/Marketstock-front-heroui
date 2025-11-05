@@ -2,7 +2,8 @@ import WelcomePage from "@/pages/front/home";
 import DashboardPage from "@/pages/back/dashboard";
 import ProduitPage from "@/pages/back/produit";
 import LivraisonPage from "@/pages/back/livraison";
-
+import CommandePage from "@/pages/back/commande";
+import FacturePage from "@/pages/back/facture";
 
 import {
   Home,
@@ -32,6 +33,12 @@ export const routes = [
     element: DashboardPage,
     name: "Dashboard",
     icon: LayoutDashboard
+  },
+  {
+    path: "/commandes",
+    element: CommandePage,
+    name: "Commandes",
+    icon: ClipboardPenLine
   },
   {
     path: "/produits",
@@ -91,6 +98,12 @@ export const routes = [
     path: "/rapports",
     element: DashboardPage, // Remplacez par votre vraie page
     name: "Rapports",
+    icon: BarChart3
+  },
+  {
+    path: ":commande_number/facture/:facture_id",
+    element: FacturePage, // Remplacez par votre vraie page
+    name: "Facture",
     icon: BarChart3
   }
 ];
