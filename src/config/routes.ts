@@ -101,7 +101,7 @@ export const routes = [
     icon: BarChart3
   },
   {
-    path: ":commande_number/facture/:facture_id",
+    path: "commandes/:commande_number/facture/:facture_id",
     element: FacturePage, // Remplacez par votre vraie page
     name: "Facture",
     icon: BarChart3

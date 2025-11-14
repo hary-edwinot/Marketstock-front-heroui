@@ -55,7 +55,7 @@ const DashboardFeature = () => {
         ))}
       </div>
       <div className="mt-4 grid grid-cols-4 gap-4">
-        <div className="col-span-3 p-4 dark:bg-content2 bg-content1 rounded-2xl border border-content3">
+        <div className="col-span-3 p-4 dark:bg-content2 bg-content1 rounded-2xl">
           <ChartDashboard />
         </div>
         <div className="col-span-1 space-y-4">

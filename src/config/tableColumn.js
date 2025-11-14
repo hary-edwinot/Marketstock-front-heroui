@@ -20,14 +20,14 @@ export const columnsCommande = [
 ];
 
 export const statusOptionsProduct = [
-    { name: "En stock", uid: "en_stock" },
-    { name: "Stock épuisé", uid: "stock_epuise" },
-    { name: "Livraison en cours", uid: "livraison_en_cours" },
-    { name: "Livrée", uid: "livree" },
-    { name: "En attente de livraison", uid: "en_attente_livraison" },
-    { name: "En commande", uid: "en_commande" },
-    { name: "Livraison annulée", uid: "livraison_annulee" },
-    { name: "Commande annulée", uid: "commande_annulee" },
+    { name: "En stock", uid: "product_en_stock" },
+    { name: "Stock épuisé", uid: "product_stock_epuise" },
+    { name: "Livraison en cours", uid: "product_livraison_en_cours" },
+    { name: "Livrée", uid: "product_livree" },
+    { name: "En attente de livraison", uid: "product_en_attente_livraison" },
+    { name: "En commande", uid: "product_en_commande" },
+    { name: "Livraison annulée", uid: "product_livraison_annulee" },
+    { name: "Commande annulée", uid: "product_commande_annulee" },
 ];
 
 export const products = [

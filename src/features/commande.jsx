@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getNamesAndGeolocalisation } from "../app/api/getLocalisation";
 import { Autocomplete, AutocompleteItem, useDisclosure } from "@heroui/react";
+import AlertDeleteModale from "../components/common/AlertDeleteModale";
 
 import DrawerForm from "../components/common/drawer";
 
@@ -17,16 +18,16 @@ import { getCommandes } from "../app/redux/commande/commandeSlice";
 
 
 
-
 export default function CommandeFeature() {
     const dispatch = useDispatch();
     const { commandes, status, error } = useSelector((state) => state.commande);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [selectedKey, setSelectedKey] = useState("en_cours");
-    const [cityData, setCityData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [cityError, setCityError] = useState(null);
+    const { isOpen: isDeleteModalOpen, onOpen: onDeleteModalOpen, onClose: onDeleteModalClose } = useDisclosure();
+
+  
+    const [itemToDelete, setItemToDelete] = useState(null);
+
 
     useEffect(() => {
         // Charger les commandes via Redux
@@ -35,16 +36,28 @@ export default function CommandeFeature() {
 
     // Log des commandes quand elles changent
     useEffect(() => {
-        console.log('Commandes Redux:', commandes);
-        console.log('Status:', status);
+
     }, [commandes, status]);
 
+
+    const handleDeleteClick = (item) => {
+        setItemToDelete(item);
+        onDeleteModalOpen();
+    };
+
+    const confirmDelete = async () => {
+        console.log("Supprimer la commande:", itemToDelete);
+        // Ici, ajoutez votre logique de suppression
+        // dispatch(deleteCommande(itemToDelete.commande_id));
+    };
+
+    
     return (
-        <div className="p-6">
-            <div className="mb-8 p-4 bg-content1 dark:bg-content2 rounded-2xl border border-content3">
+        <div >
+            <div className="mb-8 p-4 bg-content1 dark:bg-content2 rounded-2xl">
                 {status === 'loading' && <p>Chargement des commandes...</p>}
-                {status === 'failed' && <p className="text-red-500">Erreur: {error}</p>}
-                
+                {status === 'failed' && <p className="text-red-500">Erreur: {typeof error === 'string' ? error : JSON.stringify(error)}</p>}
+
                 <TableList
                     data={commandes?.data || commandes || []}
                     columns={columnsCommande}
@@ -53,19 +66,32 @@ export default function CommandeFeature() {
                     searchPlaceholder="Rechercher une commande..."
                     openDrawer={onOpen}
                     isSelected={false}
+                    deleteIcon={true}
+                    deleteActions={handleDeleteClick}
                 />
 
                 <DrawerForm
                     isOpen={isOpen}
                     onOpen={onOpen}
                     onClose={onClose}
-                    WrappedFormComponent={CommandeForm}
+                    WrappedFormComponent={(props) => <CommandeForm {...props} />}
                     size="5xl"
                     title="Nouvelle Commande"
                 />
 
+                <AlertDeleteModale 
+                    isOpen={isDeleteModalOpen}
+                    onOpenChange={onDeleteModalClose}
+                    onConfirm={confirmDelete}
+                    itemToDelete={itemToDelete?.commande_number}
+                    content= " Êtes-vous sûr de vouloir supprimer cette commande ?"
+                    label="Commande"
+                />
             </div>
         </div>
     );
 }
+
+
+
 

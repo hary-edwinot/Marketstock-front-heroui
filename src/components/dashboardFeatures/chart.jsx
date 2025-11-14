@@ -80,7 +80,6 @@ const ChartDashboard = () => {
                         labelFormatter={(label) => `Jour ${label} du mois`}
                         contentStyle={{
                             backgroundColor: 'white',
-                            border: '1px solid #ccc',
                             color: '#000000',
                             borderRadius: '4px'
                         }}

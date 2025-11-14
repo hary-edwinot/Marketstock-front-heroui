@@ -12,7 +12,7 @@ const RevenueFeature = ({ name, description, total, yesterdayTotal }) => {
     const changePercentage = yesterdayTotal ? Math.abs(((total - yesterdayTotal) / yesterdayTotal) * 100).toFixed(2) : '0';
 
     return (
-        <div className="col-span-4 lg:col-span-1 p-4 dark:bg-content2 bg-content1  rounded-2xl border border-content3">
+        <div className="col-span-4 lg:col-span-1 p-4 dark:bg-content2 bg-content1  rounded-2xl">
             <h1 className="text-1xl font-bold mb-4 flex justify-between">{name} {icon}</h1>
             <p className="text-3xl font-bold">{total}</p>
             <div className='flex items-center justify-between'>

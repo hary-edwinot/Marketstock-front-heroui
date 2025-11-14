@@ -9,7 +9,7 @@ const LivraisonFeature = () => {
    
 
     return (
-        <div className="flex w-full flex-col bg-content1 dark:bg-content2 p-4 rounded-2xl border border-content3">
+        <div className="flex w-full flex-col bg-content1 dark:bg-content2 p-4 rounded-2xl">
             <Tabs
                 aria-label="Tabs de livraison"
                 selectedKey={selectedKey}

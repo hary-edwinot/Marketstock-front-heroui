@@ -5,6 +5,31 @@
 
 /* ensuite ton CSS custom */
 
-.exe{
+.exe {
     color: #fff83a;
+}
+
+.bg-image-after-top {
+    position: relative;
+    overflow: hidden;
+    /* Assure que le pseudo-élément ne dépasse pas */
+}
+
+.light .bg-image-after-top::before {
+    display: inline-block;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    /* Ajuste la hauteur selon tes besoins */
+    background: linear-gradient(to bottom, #705CF2, white);
+    background: #705CF2;
+    height: 350px;
+    background-size: cover;
+    background-position: center;
+
+    z-index: 1;
+    /* Assure que l'image est derrière le contenu */
 }

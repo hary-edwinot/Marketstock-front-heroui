@@ -26,10 +26,10 @@ export default {
         light: {
           colors: {
             primary: {
-              DEFAULT: "#000000", // Jaune
-              // foreground: "#000000", // Texte NOIR
+              DEFAULT: "#705CF2", // Jaune
+              foreground: "#FFFFFF", // Texte NOIR
             },
-            background: "#FFFFFF", // Blanc pour le mode light
+            background: "#F4F4F5", // Blanc pour le mode light
             foreground: "#000000", // Texte noir sur fond blanc
             content1: "#ffffff", // Cards blanches
             content2: "#F4F4F5", // Cards légèrement grises
@@ -44,13 +44,13 @@ export default {
         dark: {
           colors: {
             primary: {
-              DEFAULT: "#E8FAF0", // Même jaune en mode dark
-              foreground: "#000000", // Texte NOIR aussi en mode dark
+              DEFAULT: "#705CF2", // Même jaune en mode dark
+              foreground: "#FFFFFF", // Texte NOIR aussi en mode dark
             },
-            background: "#0c0c09", // Votre couleur sombre pour le mode dark
+            background: "#131521", // Votre couleur sombre pour le mode dark #0D0E17
             foreground: "#FFFFFF", // Texte blanc sur fond sombre
-            content1: "#1E1E1E", // Cards sombres
-            content2: "#0d0d0a", // Légèrement plus claires
+            content1: "#222640", // Cards sombres
+            content2: "#151826", // Légèrement plus claires #151826
             content3: "#3A3A3A", // Plus claires
             content4: "#4A4A4A", // Encore plus claires
             badge1: {

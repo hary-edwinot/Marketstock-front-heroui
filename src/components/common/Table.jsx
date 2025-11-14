@@ -1,6 +1,6 @@
 // ===== IMPORTS =====
 // Importation de React et des composants HeroUI nécessaires pour le tableau
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
     Table,
     TableHeader,
@@ -19,10 +19,8 @@ import {
     Pagination,
 } from "@heroui/react";
 // Icône pour l'affichage des commandes
-import { FileText } from 'lucide-react';
+import { FileText, Trash2 } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
-
-
 
 // ===== FONCTIONS UTILITAIRES =====
 
@@ -162,25 +160,86 @@ export const ChevronDownIcon = ({ strokeWidth = 1.5, ...otherProps }) => {
  * - primary: bleu (statuts en cours)
  * - secondary: gris (statuts neutres)
  */
-const statusColorMap = {
-    // Statuts produits
-    en_stock: "success",
-    stock_epuise: "danger",
-    livraison_en_cours: "primary",
-    livree: "success",
-    en_attente_livraison: "warning",
-    en_commande: "secondary",
-    livraison_annulee: "danger",
-    commande_annulee: "danger",
 
-    // Statuts commandes
-    en_attente: "warning",
-    confirmee: "primary",
-    "confirmée": "primary",  // Ajout du statut avec accent
-    en_preparation: "secondary",
-    expediee: "primary",
-    annulee: "danger",
+
+const switchColorStatus = (statusName) => {
+    switch (statusName?.toLowerCase()) {
+
+        // 🏷️ PRODUIT
+        case "disponible":
+            return "#22c55e"; // vert vif — en stock
+        case "rupture":
+            return "#dc2626"; // rouge — plus de stock
+        case "en commande":
+        case "en attente de réception":
+            return "#f59e0b"; // jaune — en approvisionnement
+        case "réservé":
+            return "#06b6d4"; // cyan — réservé
+        case "en contrôle qualité":
+            return "#84cc16"; // vert clair — contrôle qualité
+        case "endommagé":
+            return "#ec4899"; // rose — endommagé
+        case "périmé":
+            return "#9ca3af"; // gris moyen — expiré
+        case "obsolète":
+            return "#6b7280"; // gris foncé — obsolète
+        case "retourné fournisseur":
+            return "#9333ea"; // violet — retour fournisseur
+        case "supprimé":
+            return "#4b5563"; // gris neutre — supprimé
+        case "archivé":
+            return "#d1d5db"; // gris clair — archivé
+
+        // 📦 COMMANDES
+        case "brouillon":
+            return "#9ca3af"; // gris clair — en création
+        case "en attente":
+            return "#facc15"; // jaune clair — en attente
+        case "confirmée":
+            return "#3b82f6"; // bleu — confirmée
+        case "payé":
+            return "#10b981"; // vert — payé
+        case "en préparation":
+            return "#14b8a6"; // teal — préparation
+        case "expédiée":
+            return "#0ea5e9"; // bleu clair — expédiée
+        case "livrée":
+            return "#84cc16"; // vert clair — livrée
+        case "retournée":
+            return "#f472b6"; // rose clair — retour client
+        case "remboursé":
+            return "#8b5cf6"; // violet clair — remboursement
+        case "annulé":
+        case "annulée":
+            return "#ef4444"; // rouge — annulée
+
+        // 🚚 LIVRAISON
+        case "en préparation":
+            return "#0d9488"; // teal foncé — préparation colis
+        case "en attente de retrait":
+            return "#eab308"; // doré — en attente de retrait
+        case "en transit":
+            return "#38bdf8"; // bleu ciel — en cours
+        case "expédié":
+            return "#3b82f6"; // bleu — envoyé
+        case "livré":
+            return "#22c55e"; // vert — livré
+        case "échec de livraison":
+            return "#b91c1c"; // rouge foncé — échec
+        case "retourné entrepôt":
+            return "#475569"; // gris bleuté — retour entrepôt
+        case "retour":
+            return "#f472b6"; // rose — retour client
+        case "livraison annulée":
+            return "#dc2626"; // rouge — annulée
+
+        // Valeur par défaut
+        default:
+            return "#94a3b8"; // gris bleuté — neutre / inconnu
+    }
 };
+
+
 
 // ===== COMPOSANT PRINCIPAL TABLELIST =====
 
@@ -202,8 +261,23 @@ const statusColorMap = {
  * - Affichage conditionnel des colonnes
  * - Actions par ligne (voir, modifier, supprimer)
  */
-export default function TableList({ INITIAL_VISIBLE_COLUMNS, data = [], columns = [], statusOptions = [], searchPlaceholder = "Rechercher...", itemLabel = "éléments", addButtonNewLabel = "Ajouter", openDrawer, isSelected = true }) {
+export default function TableList({
+    INITIAL_VISIBLE_COLUMNS,
+    data = [],
+    columns = [],
+    statusOptions = [],
+    searchPlaceholder = "Rechercher...",
+    itemLabel = "éléments",
+    addButtonNewLabel = "Ajouter",
+    openDrawer,
+    isSelected = true,
+    deleteIcon = false,
+    deleteActions,
+    
+}) {
 
+
+   
 
     // ===== ÉTATS LOCAUX =====
     const navigate = useNavigate();
@@ -357,21 +431,27 @@ export default function TableList({ INITIAL_VISIBLE_COLUMNS, data = [], columns 
             case "commande_rest_to_pay":
                 return (
                     <div className="flex flex-col">
-                        <p className="text-bold text-small text-danger">{(cellValue) ? cellValue : '0'} MGA</p>
+                        <p className="text-bold text-small text-danger  ">{(cellValue) ? cellValue : '0'} MGA</p>
                         <p className="text-bold text-tiny text-default-400">Reste à payer</p>
                     </div>
                 );
 
             // Colonne statut - Affichage avec puce colorée
             case "status_id":
+                const statusName = item.status?.status_name;
+                const statusColor = switchColorStatus(statusName);
                 return (
                     <Chip
-                        className={`capitalize bg-${statusColorMap[item.status?.status_name]}-100`}
-                        color={statusColorMap[item.status?.status_name] || "default"}
+                        className="capitalize font-bold rounded-[8px]"
                         size="sm"
-                        variant="flat"
+                        variant="solid"
+                        style={{
+                            backgroundColor: `${statusColor}20`,
+                            color: statusColor,
+                            fontWeight: 'bold',
+                        }}
                     >
-                        {item.status?.status_name || cellValue}
+                        {statusName || cellValue}
                     </Chip>
                 );
 
@@ -390,6 +470,15 @@ export default function TableList({ INITIAL_VISIBLE_COLUMNS, data = [], columns 
 
             // Colonne actions - Menu déroulant avec options
             case "actions":
+
+                if (deleteIcon) return <div className="flex justify-end">
+                    <Button isIconOnly size="sm" variant="light"
+                        onPress={() => deleteActions && deleteActions(item)}>
+                        <Trash2 className="text-danger" />
+                    </Button>
+                </div>;
+
+
                 return (
                     <div className="relative flex justify-end items-center gap-2">
                         <Dropdown>
@@ -484,6 +573,7 @@ export default function TableList({ INITIAL_VISIBLE_COLUMNS, data = [], columns 
                     <Input
                         isClearable
                         className="w-full sm:max-w-[44%]"
+                        variant="bordered"
                         placeholder={searchPlaceholder}
                         startContent={<SearchIcon />}
                         value={filterValue}
@@ -496,7 +586,10 @@ export default function TableList({ INITIAL_VISIBLE_COLUMNS, data = [], columns 
                         {/* Dropdown de filtrage par statut */}
                         <Dropdown>
                             <DropdownTrigger className="hidden sm:flex">
-                                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
+                                <Button
+                                    endContent={<ChevronDownIcon className="text-small" />}
+                                    variant="bordered"
+                                >
                                     Status
                                 </Button>
                             </DropdownTrigger>
@@ -509,7 +602,10 @@ export default function TableList({ INITIAL_VISIBLE_COLUMNS, data = [], columns 
                                 onSelectionChange={setStatusFilter}
                             >
                                 {statusOptions.map((status) => (
-                                    <DropdownItem key={status.uid} className="capitalize">
+                                    <DropdownItem
+                                        key={status.uid}
+                                        className="capitalize data-[hover=true]:bg-primary data-[hover=true]:text-white"
+                                    >
                                         {capitalize(status.name)}
                                     </DropdownItem>
                                 ))}
@@ -519,7 +615,10 @@ export default function TableList({ INITIAL_VISIBLE_COLUMNS, data = [], columns 
                         {/* Dropdown de sélection des colonnes visibles */}
                         <Dropdown>
                             <DropdownTrigger className="hidden sm:flex">
-                                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
+                                <Button
+                                    endContent={<ChevronDownIcon className="text-small" />}
+                                    variant="bordered"
+                                >
                                     Colonnes
                                 </Button>
                             </DropdownTrigger>
@@ -633,14 +732,18 @@ export default function TableList({ INITIAL_VISIBLE_COLUMNS, data = [], columns 
      * Structure : conteneur → tableau HeroUI → en-tête → corps → pied de page
      */
     return (
-        <div className="mt-4 p-4 dark:bg-content2 bg-content1 rounded-2xl border border-content3">
+        <div className="mt-4 p-4">
             <Table
                 isHeaderSticky
                 aria-label="Example table with custom cells, pagination and sorting"
                 bottomContent={bottomContent}
                 bottomContentPlacement="outside"
+
                 classNames={{
-                    wrapper: "max-h-[382px]",
+                    wrapper: "max-h-[782px] shadow-none border-2 border-background  bg-transparent",
+                    thead: " shadow-none  bg-transparent",
+                    th: "dark:bg-primary border-none ",
+                    tr: "dark:hover:bg-background  hover:bg-background cursor-pointer bg-transparent border-b-2 border-background ",
                 }}
                 selectedKeys={isSelected ? selectedKeys : null}
                 selectionMode={isSelected ? "multiple" : "none"}

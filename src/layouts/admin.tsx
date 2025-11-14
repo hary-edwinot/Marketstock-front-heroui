@@ -8,8 +8,9 @@ import { useLocation } from "react-router-dom";
 
 import { routes } from "../config/routes";
 
+
 export default function AdminLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {
@@ -23,9 +24,9 @@ export default function AdminLayout({
     && currentRoute?.name.toLowerCase() !== 'dashboard';
 
   return (
-    <div className="bg-content2 dark:bg-background px-4 pt-[1px]">
+    <div className="bg-content2 dark:bg-background px-4 pt-[1px] bg-image-after-top">
       <NavbarTop />
-      <div className="relative grid grid-cols-6 gap-6 mt-5 grid-rows-[auto_1fr_auto]">
+      <div className="relative grid grid-cols-6 gap-6 mt-5 grid-rows-[auto_1fr_auto] z-10">
         <div className="col-span-1 min-h-screen">
           <Sidebar />
         </div>
@@ -44,7 +45,7 @@ export default function AdminLayout({
 
 const MenuTop = ({ currentRoute }) => {
   return (
-    <div className="flex justify-between items-center h-[60px] mb-4 p-4 dark:bg-content2 bg-content1 rounded-2xl border border-content3">
+    <div className="flex justify-between items-center h-[60px] mb-4 p-4 dark:bg-content2 bg-content1 rounded-2xl">
       <Title current={currentRoute} />
       <div className="flex gap-3">
         <Button

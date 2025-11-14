@@ -6,7 +6,7 @@ export default function Sidebar() {
     const location = useLocation();
 
     return (
-        <div className="h-full p-3 [&>header]:px-2 dark:bg-content2 bg-content1  rounded-3xl border border-content3">
+        <div className="h-full p-3 [&>header]:px-2 dark:bg-content2 bg-content1  rounded-2xl">
             <div className="">
                 {routes.map(route => {
                     if (route.path !== '/' && route.path !== ':commande_number/facture/:facture_id') {

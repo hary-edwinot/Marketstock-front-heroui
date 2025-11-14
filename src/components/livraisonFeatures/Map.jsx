@@ -82,7 +82,6 @@ export default function MapItineraire() {
                 padding: 0,
                 margin: 0,
                 background: "#fff",
-                border: "1px solid #ccc",
                 position: "absolute",
                 zIndex: 1000,
                 width: "300px",
@@ -97,8 +96,7 @@ export default function MapItineraire() {
                   onClick={() => handleSelectSuggestion(item, "start")}
                   style={{
                     padding: "6px",
-                    cursor: "pointer",
-                    borderBottom: "1px solid #eee",
+                    cursor: "pointer"
                   }}
                 >
                   {item.display_name}
@@ -127,7 +125,6 @@ export default function MapItineraire() {
                 padding: 0,
                 margin: 0,
                 background: "#fff",
-                border: "1px solid #ccc",
                 position: "absolute",
                 zIndex: 1000,
                 width: "300px",
@@ -142,8 +139,7 @@ export default function MapItineraire() {
                   onClick={() => handleSelectSuggestion(item, "end")}
                   style={{
                     padding: "6px",
-                    cursor: "pointer",
-                    borderBottom: "1px solid #eee",
+                    cursor: "pointer"
                   }}
                 >
                   {item.display_name}

@@ -7,7 +7,16 @@ import {
     Button,
 } from "@heroui/react";
 
-const DrawerForm = ({ isOpen, onClose, onOpen, WrappedFormComponent, size = "md", title = "Formulaire" }) => {
+import { useState } from "react";
+
+const DrawerForm = ({ isOpen, onClose, WrappedFormComponent, size = "md", title = "Formulaire" }) => {
+
+    
+
+    function handleFormSubmit() {
+        onClose();
+    }
+
     return (
         <div>
             <Drawer isOpen={isOpen} size={size} onClose={onClose}>
@@ -16,16 +25,8 @@ const DrawerForm = ({ isOpen, onClose, onOpen, WrappedFormComponent, size = "md"
                         <>
                             <DrawerHeader className="flex flex-col gap-1">{title}</DrawerHeader>
                             <DrawerBody>
-                                {WrappedFormComponent && <WrappedFormComponent />}
+                                {WrappedFormComponent && <WrappedFormComponent closeDrawer={handleFormSubmit} />}
                             </DrawerBody>
-                            <DrawerFooter>
-                                <Button color="danger" variant="light" onPress={onClose}>
-                                    Close
-                                </Button>
-                                <Button color="primary" onPress={onClose}>
-                                    Action
-                                </Button>
-                            </DrawerFooter>
                         </>
                     )}
                 </DrawerContent>

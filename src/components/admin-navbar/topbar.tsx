@@ -27,6 +27,7 @@ export const NavbarTop = () => {
             <Input
               labelPlacement="outside"
               placeholder="Recherche..."
+              variant="bordered"
               startContent={
                 <Search size={20} />
               }
