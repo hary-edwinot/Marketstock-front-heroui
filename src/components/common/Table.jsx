@@ -273,11 +273,11 @@ export default function TableList({
     isSelected = true,
     deleteIcon = false,
     deleteActions,
-    
+
 }) {
 
 
-   
+
 
     // ===== ÉTATS LOCAUX =====
     const navigate = useNavigate();
@@ -290,8 +290,8 @@ export default function TableList({
     // Colonnes actuellement visibles dans le tableau
     const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
 
-    // Filtre de statut actuel ("all" ou array de statuts sélectionnés)
-    const [statusFilter, setStatusFilter] = React.useState("all");
+    // Filtre de statut actuel (Set vide = tous affichés, Set avec valeurs = filtrés)
+    const [statusFilter, setStatusFilter] = React.useState(new Set([]));
 
     // Nombre de lignes affichées par page
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -333,17 +333,45 @@ export default function TableList({
         // Appliquer le filtre de recherche si présent
         if (hasSearchFilter) {
             filteredData = filteredData.filter((item) => {
-                // Rechercher dans le champ 'name' (produits) ou 'order_number' (commandes)
-                const searchField = item.name || item.order_number || '';
-                return searchField.toLowerCase().includes(filterValue.toLowerCase());
+                // Formatter la date si elle existe
+                const formattedDate = item.created_at
+                    ? new Date(item.created_at).toLocaleDateString('fr-FR')
+                    : '';
+                const formattedTime = item.created_at
+                    ? new Date(item.created_at).toLocaleTimeString('fr-FR')
+                    : '';
+
+                // Rechercher dans plusieurs champs selon le type de données
+                const searchFields = [
+                    item.name,
+                    item.order_number,
+                    item.commande_number,
+                    item.client?.client_name,
+                    item.client?.client_last_name,
+                    item.facture?.facture_number,
+                    formattedDate,
+                    formattedTime
+                ].filter(Boolean).join(' ').toLowerCase();
+
+                return searchFields.includes(filterValue.toLowerCase());
             });
         }
 
-        // Appliquer le filtre de statut si ce n'est pas "all" et pas tous les statuts sélectionnés
-        if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-            filteredData = filteredData.filter((item) =>
-                Array.from(statusFilter).includes(item.status),
-            );
+        // Appliquer le filtre de statut seulement si des statuts sont sélectionnés
+        if (statusFilter.size > 0) {
+            filteredData = filteredData.filter((item) => {
+                // Récupérer le nom du statut
+                const statusName = item.status?.status_name;
+                if (!statusName) return false;
+
+                // Trouver l'option de statut correspondante par son nom
+                const matchingOption = statusOptions.find(
+                    option => option.name.toLowerCase() === statusName.toLowerCase()
+                );
+
+                // Vérifier si l'uid de cette option est dans le filtre
+                return matchingOption && Array.from(statusFilter).includes(matchingOption.uid);
+            });
         }
 
         return filteredData;
@@ -398,6 +426,11 @@ export default function TableList({
 
         // Switch sur le type de colonne pour un affichage personnalisé
         switch (columnKey) {
+
+
+
+            //====== UTILISER DANS LA PAGE COMMANDESS ======
+
 
             // Colonne numéro de commande - Affichage avec icône et nom du produit
             case "commande_number":
@@ -471,6 +504,7 @@ export default function TableList({
             // Colonne actions - Menu déroulant avec options
             case "actions":
 
+                // Si deleteIcon est vrai, afficher uniquement l'icône de suppression
                 if (deleteIcon) return <div className="flex justify-end">
                     <Button isIconOnly size="sm" variant="light"
                         onPress={() => deleteActions && deleteActions(item)}>
@@ -479,6 +513,8 @@ export default function TableList({
                 </div>;
 
 
+
+                // Menu d'actions complet avec voir, modifier, supprimer
                 return (
                     <div className="relative flex justify-end items-center gap-2">
                         <Dropdown>
@@ -590,12 +626,11 @@ export default function TableList({
                                     endContent={<ChevronDownIcon className="text-small" />}
                                     variant="bordered"
                                 >
-                                    Status
+                                    Status {statusFilter.size > 0 && `(${statusFilter.size})`}
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu
-                                disallowEmptySelection
-                                aria-label="Table Columns"
+                                aria-label="Filtrer par statut"
                                 closeOnSelect={false}
                                 selectedKeys={statusFilter}
                                 selectionMode="multiple"
@@ -769,10 +804,11 @@ export default function TableList({
                 <TableBody emptyContent={"Aucun produit trouvé"} items={sortedItems}>
                     {(item) => {
 
+                        console.log(item);
                         const isFacture = !!item?.facture;
                         const handleRowClick = () => {
                             if (isFacture) {
-                                navigate(`${item.commande_number}/facture/${item.facture?.facture_id || ''}`);
+                                navigate(`${item.commande_number.toLowerCase()}/${item.facture?.facture_number.toLowerCase() || ''}`);
                             }
                         };
                         return (

@@ -19,16 +19,7 @@ export const columnsCommande = [
     { name: "ACTIONS", uid: "actions" },
 ];
 
-export const statusOptionsProduct = [
-    { name: "En stock", uid: "product_en_stock" },
-    { name: "Stock épuisé", uid: "product_stock_epuise" },
-    { name: "Livraison en cours", uid: "product_livraison_en_cours" },
-    { name: "Livrée", uid: "product_livree" },
-    { name: "En attente de livraison", uid: "product_en_attente_livraison" },
-    { name: "En commande", uid: "product_en_commande" },
-    { name: "Livraison annulée", uid: "product_livraison_annulee" },
-    { name: "Commande annulée", uid: "product_commande_annulee" },
-];
+
 
 export const products = [
     {
@@ -233,14 +224,52 @@ export const products = [
     },
 ];
 
+// Les options de statut pour les livraisons
+export const statusOptionsLivraison = [
+    { name: "En préparation", uid: "en_preparation_livraison", color: "#0d9488" },
+    { name: "En attente de retrait", uid: "en_attente_retrait", color: "#eab308" },
+    { name: "En transit", uid: "en_transit", color: "#38bdf8" },
+    { name: "Expédié", uid: "expedie_livraison", color: "#3b82f6" },
+    { name: "Livré", uid: "livre_livraison", color: "#22c55e" },
+    { name: "Échec de livraison", uid: "echec_livraison", color: "#b91c1c" },
+    { name: "Retourné entrepôt", uid: "retourne_entrepot", color: "#475569" },
+    { name: "Retour", uid: "retour_client", color: "#f472b6" },
+    { name: "Livraison annulée", uid: "livraison_annulee", color: "#dc2626" },
+]
+
+// Les options de statut pour les produits
+
+export const statusOptionsProduct = [
+    { name: "Disponible", uid: "disponible", color: "#22c55e" },
+    { name: "Rupture", uid: "rupture", color: "#dc2626" },
+    { name: "En commande", uid: "en_commande", color: "#f59e0b" },
+    { name: "En attente de réception", uid: "en_attente_reception", color: "#f59e0b" },
+    { name: "Réservé", uid: "reserve", color: "#06b6d4" },
+    { name: "En contrôle qualité", uid: "en_controle_qualite", color: "#84cc16" },
+    { name: "Endommagé", uid: "endommage", color: "#ec4899" },
+    { name: "Périmé", uid: "perime", color: "#9ca3af" },
+    { name: "Obsolète", uid: "obsolete", color: "#6b7280" },
+    { name: "Retourné fournisseur", uid: "retourne_fournisseur", color: "#9333ea" },
+    { name: "Supprimé", uid: "supprime", color: "#4b5563" },
+    { name: "Archivé", uid: "archive", color: "#d1d5db" },
+];
+
+
+// Les options de statut pour les commandes
+
 export const statusOptionsCommande = [
+    { name: "Brouillon", uid: "brouillon" },
     { name: "En attente", uid: "en_attente" },
     { name: "Confirmée", uid: "confirmee" },
+    { name: "Payé", uid: "paye" },
     { name: "En préparation", uid: "en_preparation" },
     { name: "Expédiée", uid: "expediee" },
     { name: "Livrée", uid: "livree" },
+    { name: "Retournée", uid: "retournee" },
+    { name: "Remboursé", uid: "rembourse" },
     { name: "Annulée", uid: "annulee" },
 ];
+
 
 export const INITIAL_VISIBLE_COLUMNS = ["name", "price", "category", "status", "actions"];
 export const INITIAL_VISIBLE_COLUMNS_COMMANDE =

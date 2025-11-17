@@ -3,6 +3,7 @@ import commandeReducer from "./commande/commandeSlice";
 import clientReducer from "./clients/clientSlice";
 import geolocalisationReducer from "./geolocalisation/search-localisation";
 import statusReducer from "./status/statusSlice";
+import productReducer from "./product/productSlice";
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         client: clientReducer,
         geolocalisation: geolocalisationReducer,
         status: statusReducer,
+        product: productReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

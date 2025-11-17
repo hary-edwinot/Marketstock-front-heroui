@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { getNamesAndGeolocalisation } from "../app/api/getLocalisation";
-import { Autocomplete, AutocompleteItem, useDisclosure } from "@heroui/react";
+import { useDisclosure } from "@heroui/react";
 import AlertDeleteModale from "../components/common/AlertDeleteModale";
 
 import DrawerForm from "../components/common/drawer";

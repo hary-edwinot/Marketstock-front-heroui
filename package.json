@@ -29,6 +29,7 @@
     "@heroui/use-theme": "2.1.10",
     "@heroui/user": "^2.2.22",
     "@react-aria/visually-hidden": "3.8.28",
+    "@react-pdf/renderer": "^4.3.1",
     "@react-stately/data": "^3.14.1",
     "@react-types/shared": "3.32.1",
     "@reduxjs/toolkit": "^2.9.2",
